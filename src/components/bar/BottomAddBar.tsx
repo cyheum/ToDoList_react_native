@@ -1,6 +1,9 @@
 import React, { useState } from "react";
 import { KeyboardAvoidingView, StyleSheet, View } from "react-native";
+import { useDispatch } from "react-redux";
 import { TextInput } from "react-native-gesture-handler";
+import useGetDoList from "../../hooks/useGetDoList";
+import { addContent } from "../../modules/store/store";
 import CheckBox from "../item/CheckBox";
 import AddButton from "../item/AddButton";
 
@@ -9,7 +12,22 @@ export default function BottomAddBar({
 }: {
   keyboardHeight: number;
 }) {
+  const dispatch = useDispatch();
   const [addText, setAddText] = useState("");
+  const { toDoList } = useGetDoList();
+
+  const onAddContent = (content: string) => {
+    if (!content) return;
+    const newDoList = [
+      ...toDoList,
+      {
+        text: content,
+        checked: false,
+      },
+    ];
+    dispatch(addContent(newDoList));
+    setAddText("");
+  };
 
   return (
     <KeyboardAvoidingView style={styles.container}>
@@ -22,8 +40,9 @@ export default function BottomAddBar({
           placeholder={"할일 추가"}
           value={addText}
           onChangeText={(text) => setAddText(text)}
+          onSubmitEditing={() => onAddContent(addText)}
         ></TextInput>
-        <AddButton newContent={addText} setAddText={setAddText} />
+        <AddButton newContent={addText} onAddContent={onAddContent} />
       </View>
     </KeyboardAvoidingView>
   );
