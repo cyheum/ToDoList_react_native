@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { ScrollView, Keyboard, KeyboardEvent } from "react-native";
 import useGetDoList from "../../hooks/useGetDoList";
-import ToDoListContainer from "../../components/organizm/ToDoListContainer";
+import ToDoListContainer from "../../components/organizm/TodoListContainer";
 import BottomAddBar from "../../components/bar/BottomAddBar";
 import WhenEmpty from "../../components/item/WhenEmpty";
 

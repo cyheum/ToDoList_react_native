@@ -3,7 +3,6 @@ import { useDispatch } from "react-redux";
 import { View, Text, StyleSheet } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { font } from "../../styles/common";
-import { useGetActiveTab } from "../../hooks/useGetDoList";
 import { changeTab } from "../../modules/store/store";
 
 export default function HeaderBar() {
