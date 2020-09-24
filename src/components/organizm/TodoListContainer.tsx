@@ -7,12 +7,9 @@ import ToDoCheckContent from "../molecules/ToDoCheckContent";
 export default function TodoListContainer({ toggle }: any) {
   const { toDoList } = useGetDoList();
 
-  const renderItem = (
-    item: any,
-    index: number
-  ): JSX.Element | undefined | null => {
-    if (toggle !== "toDo" && !item.checked) return;
-    if (toggle === "toDo" && item.checked) return;
+  const renderItem = ({ item, index }: { item: any; index: number }) => {
+    if (toggle !== "toDo" && !item.checked) return <View />;
+    if (toggle === "toDo" && item.checked) return <View />;
     return (
       <ToDoCheckContent
         content={item.text}
@@ -26,7 +23,7 @@ export default function TodoListContainer({ toggle }: any) {
     <View style={styles.container}>
       <FlatList
         data={toDoList}
-        renderItem={({ item, index }) => renderItem(item, index)}
+        renderItem={renderItem}
         keyExtractor={(item: any, index) => item.text + index}
       />
     </View>
