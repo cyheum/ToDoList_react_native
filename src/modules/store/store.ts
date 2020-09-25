@@ -3,23 +3,44 @@ const DELETE_CONTENT = "store/DELETE_CONTENT" as const;
 const CHANGE_TAB = "store/CHANGE_TAB" as const;
 const CHECK_TOGGLE = "store/CHECK_TOGGLE" as const;
 
-interface initialProps {
-  toDoList: any;
+interface ToDo {
+  text: string;
+  checked: boolean;
+}
+
+interface InitialState {
+  toDoList: ToDo[];
   activeTab: string;
 }
 
-type contentAction =
-  | ReturnType<typeof addContent>
-  | ReturnType<typeof deleteContent>
-  | ReturnType<typeof changeTab>
-  | ReturnType<typeof checkToggle>;
+type contentAction = AddContent | DeleteContent | ChangeTab | CheckToggle;
 
-export const addContent = (toDoList: any) => ({
+interface AddContent {
+  type: typeof ADD_CONTENT;
+  toDoList: ToDo[];
+}
+
+interface DeleteContent {
+  type: typeof DELETE_CONTENT;
+  toDoList: ToDo[];
+}
+
+interface ChangeTab {
+  type: typeof CHANGE_TAB;
+  activeTab: string;
+}
+
+interface CheckToggle {
+  type: typeof CHECK_TOGGLE;
+  toDoList: ToDo[];
+}
+
+export const addContent = (toDoList: ToDo[]) => ({
   type: ADD_CONTENT,
   toDoList,
 });
 
-export const deleteContent = (toDoList: any) => ({
+export const deleteContent = (toDoList: ToDo[]) => ({
   type: DELETE_CONTENT,
   toDoList,
 });
@@ -29,20 +50,17 @@ export const changeTab = (activeTab: string) => ({
   activeTab,
 });
 
-export const checkToggle = (toDoList: any) => ({
+export const checkToggle = (toDoList: ToDo[]) => ({
   type: CHECK_TOGGLE,
   toDoList,
 });
 
-const INITIAL_STATE: initialProps = {
+const INITIAL_STATE: InitialState = {
   toDoList: [],
   activeTab: "toDo",
 };
 
-export default function store(
-  state: initialProps = INITIAL_STATE,
-  action: contentAction
-) {
+export default function store(state = INITIAL_STATE, action: contentAction) {
   switch (action.type) {
     case ADD_CONTENT:
       return {
